@@ -1,0 +1,12 @@
+{
+  "name": "api-personal",
+  "version": "0.0.1",
+  "description": "This API has been created for aplication of skills",
+  "main": "index.js",
+  "repository": "https://github.com/Guty360/Project-MERN-Backend.git",
+  "author": "FyreFox360 <jmge5833@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^6.9.2"
+  }
+}
