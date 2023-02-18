@@ -6,7 +6,13 @@
   "repository": "https://github.com/Guty360/Project-MERN-Backend.git",
   "author": "FyreFox360 <jmge5833@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon ./index.ts"
+  },
   "dependencies": {
-    "mongoose": "^6.9.2"
+    "@types/node": "^18.14.0",
+    "mongoose": "^6.9.2",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1"
   }
 }
