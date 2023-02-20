@@ -1,7 +1,7 @@
     //This is a element of express, for creation of API REST 
-    
-    import express from "express"
-    import Config from "./Config/DB.config";
+import express from "express"
+import bodyParser from "body-parser";
+import Config from "./Config/DB.config";
 
     const App = express();
 
@@ -9,6 +9,8 @@
 
     //configuration of Body parser: Esto hace que podamos enviar y recibir informacion del body y parsearlo 
     //a JSON
+    App.use(bodyParser.urlencoded({ extended: true }));
+    App.use(bodyParser.json());
 
     //Configuration of CORS - HTTP HEADER, Esto nos permite gestionar las rutas de acceso con cors
 
