@@ -4,6 +4,7 @@ import { App } from "../App";
 import Config from "../Config/DB.config";
 import boom from "boom"
 
+
 const Connection = () => {
     try{
         mongoose.set("strictQuery", false);
