@@ -3,15 +3,18 @@ import express from "express"
 import bodyParser from "body-parser";
 import cors from "cors"
 import Config from "./Config/DB.config";
-
+    //import of the routes
+import { AuthRouther } from "./Routes/Auth.routes";
+import { UserRoutes } from "./Routes/User.routes";
     const App = express();
 
-    //import of the routes
+
 
     //configuration of Body parser: Esto hace que podamos enviar y recibir informacion del body y parsearlo 
     //a JSON
     App.use(bodyParser.urlencoded({ extended: true }));
     App.use(bodyParser.json());
+    App.use(express.json())
 
 
     //Configure static folder
@@ -22,5 +25,8 @@ import Config from "./Config/DB.config";
 
 
     //Configuration of routings of access
+
+    App.use(`/api/${Config.API_VERSION}`, AuthRouther);
+    App.use(`/api/${Config.API_VERSION}`, UserRoutes);
 
 export {App};

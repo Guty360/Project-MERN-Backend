@@ -7,7 +7,7 @@ import boom from "boom"
 
 const Connection = () => {
     try{
-        mongoose.set("strictQuery", false);
+        mongoose.set("strictQuery", true);
 
         //generating the connection on database
         mongoose.connect(`mongodb+srv://${Config.DB_USER}:${Config.DB_PASSWORD}@${Config.DB_HOST}/`, (error) => {
@@ -17,7 +17,7 @@ const Connection = () => {
             App.listen(Config.PORT, () => {
                 
                 console.log("---------->Server Express Online<----------");
-                console.log(`http://${Config.IP_SERVER}:${Config.PORT}/api/${Config.API_VERSION}`);
+                console.log(`http://${Config.IP_SERVER}:${Config.PORT}/api/${Config.API_VERSION}/`);
             })
         
         });
