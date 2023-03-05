@@ -27,6 +27,7 @@ function createRefreshToken(user: any){
         iat: Date.now(),
         exp: expireToken.getTime(),
     };
+    
     return jwt.sign(payload, Config.JWT_SECRET_KEY);
 }
 
@@ -40,4 +41,4 @@ export {
     createRefreshToken,
     createdAccessToken,
     decoder
-}
+};

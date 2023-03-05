@@ -30,7 +30,7 @@ function login(
         //generating a accesstoken y refreshtoken
         User.findOne({ email: emailLowerCase }, (error: any, userStorage:any) =>{
             if(error){
-                res.status(400).send({ msg: "Error of server" })
+                res.status(400).send({ msg: "Error of server" });
             }else{
                 bcrypt.compare(password, userStorage.password, (bcryptErr: any, cheack: any) =>{
                     if(bcryptErr){
@@ -39,7 +39,7 @@ function login(
                         res.status(500).send({ msg: "Error of the server" });
                     } else if(!userStorage.active){
                         res.status(401).send({ msg: "User not active" })
-                    }else{
+                    }else{                      
                         res.status(200).send({
                             access: createdAccessToken(userStorage),
                             refresh: createRefreshToken(userStorage),
@@ -61,12 +61,12 @@ function refreshAccessToken(
     //     }
     // }
     try{
-        const {token} = req.body;
-
-        if(!token) res.status(400).send({ msg: "Token requerido" })
+        const {token} = req.body;        
+        
+        if(!token) res.status(400).send({ msg: "Token requerido" });
     
-        const { user_id } = decoder(token) as JwtPayload
-    
+        const { user_id } = decoder(token) as JwtPayload;
+  
         User.findOne({ _id: user_id }, (err: any, userStorage: any) => {
             if(err){
                 res.status(500).send({ msg: "Error of the server" });
