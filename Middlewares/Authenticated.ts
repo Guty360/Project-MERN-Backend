@@ -16,7 +16,7 @@ function AsureAuth(
         .status(403).send({msg: "Server header sending error"});
     }
    
-    const token = req.headers.authorization.replace("Bearer", "");
+    const token = req.headers.authorization.replace("Bearer ", "");
     
     try {    
         const payload = decoder(token);

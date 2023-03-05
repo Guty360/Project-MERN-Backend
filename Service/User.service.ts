@@ -4,7 +4,7 @@ const UserData = require('../Models/user.models');
 
 export class User{
 
-    async createUser(firstName:any, lastName:any, email:any, password:any){
+    async createNewUser(firstName:any, lastName:any, email:any, password:any){
         
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(password, salt);
