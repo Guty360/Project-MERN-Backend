@@ -1,8 +1,30 @@
 import { Response, Request, NextFunction } from "express";
 import { User } from "../Service/user.service";
+const userSearch = require("../Models/user.models")
+
 
 const userDataService = new User();
 
+async function getMe(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+
+    const {user_id} = req.body;
+    
+    
+
+    userSearch.findOne({ _id:  user_id } , (err: any, userStorage: any) => {
+        res.status(200).json({
+           userStorage,
+        }
+        )
+    });
+
+}
+
+// Register the firts user
 const registerUser = async(
     req: Request,
     res: Response,
@@ -19,16 +41,17 @@ const registerUser = async(
         if(sendUser != null){
             res.status(200).json({
                 message: "User created",
-                sendUser,
+                sendUser,  
             });  
         } else {
             throw res.status(400).send({ msg: "Has been a error" });
         }
     }catch(err){
-        next(err)
+        next(err);
     }
 }
 
 export{
     registerUser,
+    getMe
 };
