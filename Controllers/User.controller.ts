@@ -1,20 +1,22 @@
 import { Response, Request, NextFunction, response } from "express";
-import { User } from "../Service/user.service";
-const userSearch = require("../Models/user.models")
+import bcrypt from "bcryptjs";
+import { UserService } from "../Service/user.service";
+import { getFilePath } from "../Utils/image.utils";
+const User = require("../Models/user.models");
 
 
-const userDataService = new User();
+const userDataService = new UserService();
 
 // Obtain one user for ID on token authenticated
 async function getMe(
-    req: Request,
+    req: any,
     res: Response,
     next: NextFunction
 ) {
     try{
-        const {user_id} = req.body;
+        const {user_id} = req.user;
         
-        const response = await userSearch.findById(user_id);
+        const response = await User.findById(user_id);
 
         if(!response){
             res.status(400).send({msg: "User not found"});
@@ -35,13 +37,10 @@ async function getUsers(
         const { active } = req.query;
         let response = null;
 
-        console.log(active);
-        
-
         if(active === undefined){
-            response = await userSearch.find();
+            response = await User.find();
         }else{
-            response = await userSearch.find({ active })
+            response = await User.find({ active })
         }
         res.status(200).send(response);
     }catch(err){
@@ -50,12 +49,34 @@ async function getUsers(
 }
 
 // this function is only for people on rol admin in the future
-async function createUser(
-    req: Request,
+async function createUserAdmin(
+    req: any,
     res: Response,
     next: NextFunction
 ){
-   
+
+    const { password } = req.body;
+    const salt = bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password, salt);
+    
+
+    const user = new User({ 
+        ...req.body, active: false, password: hashPassword
+    })
+
+    if(req.files.avatar){
+      const imagePath = getFilePath(req.files.avatar);  
+        user.avatar = imagePath; 
+    }
+
+    user.save((err: any, userStorage: any) => {
+        if(err){
+            res.status(500).send({ msg: "Error to created user"});
+        }else{
+            res.status(200).json({ msg: "User created sucessfully", userStorage });
+        }
+    });
+     
 }
 
 // Register the firts user
@@ -85,9 +106,60 @@ const registerUser = async(
     }
 }
 
+async function updateUser(
+    req: any,
+    res: Response,
+    next: NextFunction
+){
+    const { id } = req.params;
+    const userData = req.body;
+
+        if(userData.password){
+            const salt = bcrypt.genSaltSync(10);
+            const hashPassword = bcrypt.hashSync(userData.password, salt);
+
+            userData.password = hashPassword;
+        } else {
+            delete userData.password;
+        }
+
+        if(req.files.avatar){
+            const filePath = getFilePath(req.files.avatar);
+            userData.avatar = filePath;
+        }
+        
+        
+    User.findByIdAndUpdate({ _id: id }, userData, (err: any) => {
+       if(err){
+        res.status(400).send({ msg: "Error updating user" });
+       } else {
+        res.status(200).send({ msg: "User Updated" });
+       }
+    });
+}
+
+async function deleteUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
+    const { id } = req.params;
+    
+    User.findByIdAndDelete({ _id: id }, (error: any) => {
+        if(error){
+            res.status(400).send({ msg: "Error deleting user" });
+        } else{
+            res.status(200).send({ msg: "User eliminated" });
+        }
+    })
+    
+}
+
 export{
     registerUser,
     getMe,
     getUsers,
-    createUser,
+    createUserAdmin,
+    updateUser,
+    deleteUser
 };

@@ -6,6 +6,7 @@ import Config from "./Config/DB.config";
     //import of the routes
 import { AuthRouther } from "./Routes/Auth.routes";
 import { UserRoutes } from "./Routes/User.routes";
+import { MenuRouter } from "./Routes/Menu.routes";
     const App = express();
 
 
@@ -14,7 +15,6 @@ import { UserRoutes } from "./Routes/User.routes";
     //a JSON
     App.use(bodyParser.urlencoded({ extended: true }));
     App.use(bodyParser.json());
-    App.use(express.json())
 
 
     //Configure static folder
@@ -28,5 +28,6 @@ import { UserRoutes } from "./Routes/User.routes";
 
     App.use(`/api/${Config.API_VERSION}`, AuthRouther);
     App.use(`/api/${Config.API_VERSION}`, UserRoutes);
+    App.use(`/api/${Config.API_VERSION}`, MenuRouter)
 
 export {App};

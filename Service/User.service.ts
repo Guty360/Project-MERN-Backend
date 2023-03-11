@@ -2,7 +2,7 @@ import boom from "boom";
 import bcrypt from "bcryptjs";
 const UserData = require('../Models/user.models');
 
-export class User{
+export class UserService{
 
     async createNewUser(firstName:any, lastName:any, email:any, password:any){
         

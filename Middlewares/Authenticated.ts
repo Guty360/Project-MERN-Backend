@@ -1,12 +1,12 @@
 import { Response, Request, NextFunction } from "express";
 import { JwtPayload } from "jsonwebtoken";
-
 import {
 decoder
 } from "../Utils/jwt.utils"
 
+
 function AsureAuth(
-    req: Request,
+    req: any,
     res: Response,
     next: NextFunction
     ){
@@ -15,7 +15,7 @@ function AsureAuth(
         return res
         .status(403).send({msg: "Server header sending error"});
     }
-   
+    
     const token = req.headers.authorization.replace("Bearer ", "");
     
     try {    
@@ -25,10 +25,11 @@ function AsureAuth(
         const currentData = new Date().getTime();
         
         if(exp <= currentData){
-            return res.status(400).send({ msg: "The token has been finalizated" })
+            return res.status(400).send({ msg: "The token has been finalizated" });
         }
         // retornas un usuario en base al token siempre y cuando cumpla con la condicion
-        req.body = payload; 
+        req.user = payload;
+         
         next();
         
     } catch (err) {

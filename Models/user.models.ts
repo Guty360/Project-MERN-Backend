@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
     password: String,
     role: String,
     active: Boolean,
-    avatar: String
+    avatar: String,
 });
 
 module.exports = mongoose.model("User", UserSchema);

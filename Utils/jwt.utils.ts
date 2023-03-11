@@ -40,5 +40,5 @@ function decoder(token: any) {
 export {
     createRefreshToken,
     createdAccessToken,
-    decoder
+    decoder,
 };

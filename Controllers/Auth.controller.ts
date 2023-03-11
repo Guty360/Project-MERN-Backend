@@ -22,7 +22,7 @@ function login(
         if(!password)res.status(400).send({ msg: "The password is obligate" });
 
         const emailLowerCase = email.toLowerCase();
-
+        
         // const valor = userService.finUser(email, password);
         // console.log(valor);
         
@@ -65,17 +65,22 @@ function refreshAccessToken(
         
         if(!token) res.status(400).send({ msg: "Token requerido" });
     
-        const { user_id } = decoder(token) as JwtPayload;
-  
-        User.findOne({ _id: user_id }, (err: any, userStorage: any) => {
-            if(err){
-                res.status(500).send({ msg: "Error of the server" });
-            }else {
-                res.status(200).send({ 
-                    accessToken: createdAccessToken(userStorage),
-                 })
-            }
-        });
+        const { user_id, token_type } = decoder(token) as JwtPayload;
+        
+        if(token_type == "refresh"){
+            User.findOne({ _id: user_id }, (err: any, userStorage: any) => {
+                if(err){
+                    res.status(500).send({ msg: "Error of the server" });
+                }else {
+                    res.status(200).send({ 
+                        accessToken: createdAccessToken(userStorage),
+                     })
+                }
+            });
+        }else{
+            res.status(400).send({ msg: "Has been a error, token Invalid"});
+        }
+
     }catch(err){
         next(err)
     }
