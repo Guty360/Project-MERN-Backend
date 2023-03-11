@@ -7,6 +7,7 @@ import Config from "./Config/DB.config";
 import { AuthRouther } from "./Routes/Auth.routes";
 import { UserRoutes } from "./Routes/User.routes";
 import { MenuRouter } from "./Routes/Menu.routes";
+import { CourseRouter } from "./Routes/Course.routes";
     const App = express();
 
 
@@ -28,6 +29,7 @@ import { MenuRouter } from "./Routes/Menu.routes";
 
     App.use(`/api/${Config.API_VERSION}`, AuthRouther);
     App.use(`/api/${Config.API_VERSION}`, UserRoutes);
-    App.use(`/api/${Config.API_VERSION}`, MenuRouter)
+    App.use(`/api/${Config.API_VERSION}`, MenuRouter);
+    App.use(`/api/${Config.API_VERSION}`, CourseRouter);
 
 export {App};
