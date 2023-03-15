@@ -19,7 +19,7 @@ const Connection = () => {
                 console.log("---------->Server Express Online<----------");
                 console.log(`http://${Config.IP_SERVER}:${Config.PORT}/api/${Config.API_VERSION}/`);
             })
-        
+            
         });
     }catch(err){
         throw boom.badRequest("Not has been the connection on the database", err);
