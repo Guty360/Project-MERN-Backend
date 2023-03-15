@@ -8,6 +8,8 @@ import { AuthRouther } from "./Routes/Auth.routes";
 import { UserRoutes } from "./Routes/User.routes";
 import { MenuRouter } from "./Routes/Menu.routes";
 import { CourseRouter } from "./Routes/Course.routes";
+import { PostRouter } from "./Routes/Post.routes";
+import { NewsLetterRouter } from "./Routes/NewsLetter.routes";
     const App = express();
 
 
@@ -31,5 +33,7 @@ import { CourseRouter } from "./Routes/Course.routes";
     App.use(`/api/${Config.API_VERSION}`, UserRoutes);
     App.use(`/api/${Config.API_VERSION}`, MenuRouter);
     App.use(`/api/${Config.API_VERSION}`, CourseRouter);
-
+    App.use(`/api/${Config.API_VERSION}`, PostRouter);
+    App.use(`/api/${Config.API_VERSION}`, NewsLetterRouter);
+    
 export {App};

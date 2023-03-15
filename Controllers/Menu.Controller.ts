@@ -68,7 +68,6 @@ async function updateMenu(
                 }else{
                    res.status(200).send({
                      msg: "Updated menu",
-                     Menu: MenuStorage
                  });
                 }
             });
