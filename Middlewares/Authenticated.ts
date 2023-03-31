@@ -14,8 +14,8 @@ function AsureAuth(
     if(!req.headers.authorization){
         return res
         .status(403).send({msg: "Server header sending error"});
-    }
-    
+    }   
+
     const token = req.headers.authorization.replace("Bearer ", "");
     
     try {    
@@ -27,6 +27,7 @@ function AsureAuth(
         if(exp <= currentData){
             return res.status(400).send({ msg: "The token has been finalizated" });
         }
+        
         // retornas un usuario en base al token siempre y cuando cumpla con la condicion
         req.user = payload;
          
