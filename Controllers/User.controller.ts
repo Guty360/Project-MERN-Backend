@@ -17,7 +17,8 @@ async function getMe(
         const {user_id} = req.user;
         
         const response = await User.findById(user_id);
-
+    
+        
         if(!response){
             res.status(400).send({msg: "User not found"});
         }else{

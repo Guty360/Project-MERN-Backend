@@ -40,7 +40,7 @@ function login(
                     } else if(!userStorage.active){
                         res.status(401).send({ msg: "User not active" })
                     }else{                      
-                        res.status(200).send({
+                        res.status(201).send({
                             access: createdAccessToken(userStorage),
                             refresh: createRefreshToken(userStorage),
                         })
