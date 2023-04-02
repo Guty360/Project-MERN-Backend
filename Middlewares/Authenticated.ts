@@ -3,7 +3,7 @@ import { JwtPayload } from "jsonwebtoken";
 import {
 decoder
 } from "../Utils/jwt.utils"
-
+const user = require("../Models/user.models")
 
 function AsureAuth(
     req: any,
@@ -21,13 +21,14 @@ function AsureAuth(
     try {    
         const payload = decoder(token);
         const { exp = 0 } = payload as JwtPayload;
+        const { user_id } = payload as JwtPayload;
                 
         const currentData = new Date().getTime();
         
         if(exp <= currentData){
             return res.status(400).send({ msg: "The token has been finalizated" });
         }
-        
+                
         // retornas un usuario en base al token siempre y cuando cumpla con la condicion
         req.user = payload;
          
