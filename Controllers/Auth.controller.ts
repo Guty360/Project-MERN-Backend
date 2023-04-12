@@ -8,6 +8,7 @@ decoder
 const User = require('../Models/user.models');
 import bcrypt from "bcryptjs";
 import { JwtPayload } from "jsonwebtoken";
+import { log } from "console";
 
 const userService = new UserServiceAuth();
 
@@ -32,6 +33,7 @@ function login(
             if(error){
                 res.status(400).send({ msg: "Error of server" });
             }else{
+                
                 bcrypt.compare(password, userStorage.password, (bcryptErr: any, cheack: any) =>{
                     if(bcryptErr){
                         res.status(500).send({ msg: "Error of the server" });
@@ -45,7 +47,7 @@ function login(
                             refresh: createRefreshToken(userStorage),
                         })
                     }
-                })
+                }) 
             }
         })
     }

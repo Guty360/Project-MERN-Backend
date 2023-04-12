@@ -41,7 +41,7 @@ async function getMenu(
             response = await Menu.find({ active }).sort({ order: Menu.order });
         }
         if(response !== null){
-            res.status(200).send({ Menu: response }) 
+            res.status(200).send(response) 
         }else{
             res.status(400).send({ msg: "Error of server" })
         }
