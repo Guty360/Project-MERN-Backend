@@ -52,9 +52,7 @@ function getCourse(
         if(err){
             res.status(400).send({ msg: "Has been a error" });
         }else{
-            res.status(200).json({ msg: "Process succesfully",
-                                    courses: curses,
-        })
+            res.status(200).send(curses)
         }
     })
 
